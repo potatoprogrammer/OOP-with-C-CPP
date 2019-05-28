@@ -1,0 +1,67 @@
+//Name: Caio Victor Gonçalves - Project: Criate two characters with random atributes
+#include <iostream>
+#include <string>
+#include <random>
+#include <time.h>
+#include <stdlib.h>
+using namespace std;
+//Design a character for a game, creating a class to hold at least three attributes for each character
+//Include methods to get and set each of the character’s attributes
+class Character{
+    private: 
+        int health{};
+        int action_pints{};
+        int movement_points{};
+    public:
+    void sethp(int);
+    void setap(int);
+    void setmp(int);
+    int gethp();
+    int getap();
+    int getmp();
+    void display();
+};
+void Character::sethp(int health){
+    this->health = health;
+}
+void Character::setap(int action){
+    this->action_pints = action;
+}
+void Character::setmp(int movement){
+    this->movement_points = movement;
+}
+int Character::gethp(){
+    return this->health;
+}
+int Character::getap(){
+    return this->action_pints;
+}
+int Character::getmp(){
+    return this->movement_points;
+}
+void Character::display(){
+    cout << "Your character have: " << endl << health << " >> hp" << endl << action_pints << " >> ap" << endl << movement_points << " >> mp" << endl;
+}
+int main(){
+    Character one;
+    Character two;
+    int health{};
+    int action{};
+    int movement{};
+    srand (time(NULL)); // buffer the random numbers
+    health = rand() % 100 + 1;
+    action = rand() % 10 + 1;
+    movement = rand() % 12 + 1;
+    one.sethp(health);
+    one.setap(action);
+    one.setmp(movement);
+    one.display();
+    health = rand() % 100 + 1;
+    action = rand() % 10 + 1;
+    movement = rand() % 12 + 1;
+    two.sethp(health);
+    two.setap(action);
+    two.setmp(movement);
+    two.display();
+    return 0;
+}
