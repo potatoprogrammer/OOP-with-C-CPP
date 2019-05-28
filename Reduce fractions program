@@ -1,0 +1,88 @@
+//Name: Caio - Date: 2019-05-08 - Project: Chapter 7 case study from Object oriented programming using C++ book
+#include <iostream>
+#include <string>
+using namespace std;
+/*Create a Fraction class with three private data fields for whole number, numerator,
+and denominator.*/
+class Fraction{
+    private:
+        string name{};
+        int numerator{};
+        int denominator{};
+        int whole_number{};
+    public:
+        const static char bar{'/'};
+        void enterFractionValue();
+        void displayFraction();
+        void reduceFraction();
+        void loop();
+};
+void Fraction::enterFractionValue(){
+    string name{};
+    int numerator{};
+    int denominator{};
+    int whole_number{};
+    cout << "Enter a name for your fraction >> ";
+    cin >> name;
+    this->name = name;
+    cout << "Enter a whole number for fraction " << this->name << " >> ";
+    cin >> whole_number;
+    this->whole_number = whole_number;
+    cout << "Enter a numerator for fraction " << this->name << " >> ";
+    cin >> numerator;
+    this->numerator = numerator;
+    do
+    {
+        cout << "Enter a denominator for fraction " << this->name << " >> ";
+        cin >> denominator;
+    } while (denominator == 0);
+
+    this->denominator = denominator;
+}
+/*A displayFraction()function that displays any Fraction object passed to it. This
+function displays a fraction with a slash between the numerator and denominator.
+*/
+void Fraction::displayFraction(){
+    cout << "Your fraction " << this->name << " is >> ";
+    if (this->numerator == 0 && this->whole_number == 0)
+    {
+        cout << this->whole_number << endl;
+    }else
+    {
+        cout << this->whole_number << " " << this->numerator << bar << this->denominator << endl;
+    }
+}
+/*A reduceFraction()function that accepts a Fraction object and reduces it to proper
+form, returning the reduced Fraction. For example, a Fraction entering the function as 0
+2/6 would be reduced to 0 1/3, and a Fraction entered as 4 18/4 would be reduced to 8 1/2*/
+void Fraction::reduceFraction(){
+    int whole_number{};
+    this->whole_number += this->numerator / this->denominator;
+    whole_number = this->numerator / this->denominator;
+    this->numerator = this->numerator - (whole_number * this->denominator); 
+    for (int i = this->denominator * this->numerator; i > 1; i--) {  
+        if ((this->denominator % i == 0) && (this->numerator % i == 0)) {  
+        this->denominator /= i;  
+        this->numerator /= i;  
+        }        
+    }
+}
+void Fraction::loop(){
+    do
+    {
+        enterFractionValue();
+        displayFraction();
+        reduceFraction();
+        cout << "After reduction" << endl;
+        displayFraction();
+    } while (this->numerator != 0 && this->whole_number != 0);
+}
+/*A main()function that declares a Fraction object and continues to get Fraction values
+from the user until the user enters a Fraction with value 0 (both the whole number and
+the numerator are 0). For each Fraction entered, display the Fraction, reduce the
+Fraction, and display the Fraction again.*/
+int main(){
+    Fraction one;
+    one.loop();
+    return 0;
+}
