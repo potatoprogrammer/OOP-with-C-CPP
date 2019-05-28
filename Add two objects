@@ -1,0 +1,68 @@
+//Name: Caio - Date: 2019-05-23 - Project: question 3 chap 11 from Object oriented programming using C++ book
+#include <iostream>
+#include <string>
+using namespace std;
+/*a. Create a Homework class with fields for the class name, the assignment (for example, “read
+chapter 11”), and the number of minutes predicted it will take to complete the assignment.
+-----------------------------------------------------------------------------------------------
+*/
+class Homework{
+    private:
+        string name{};
+        int minutes{};
+    public:
+    /*Include functions to set the values for the Homework fields, to provide output, and to
+overload the + operator to add Homework objects’ minutes. The result of the addition is a
+-summary?- Homework object.*/
+    friend istream& operator>>(istream&, Homework&);
+    friend ostream& operator<<(ostream&, Homework&);
+    Homework operator+(Homework);
+    Homework();
+    Homework(string, int);
+};
+Homework::Homework(){}
+Homework::Homework(string n, int m){
+    name = n;
+    minutes = m;
+}
+Homework Homework::operator+(Homework work){
+    Homework sum;
+    sum.name = this->name + " " + work.name;
+    sum.minutes = this->minutes + work.minutes;
+    return sum;
+}
+istream& operator>>(istream& in, Homework& awork){
+    cout << endl;
+    cout << "Enter the assignment name >> ";
+    in >> awork.name;
+    cout << "Enter the time for that assignment >> ";
+    in >> awork.minutes;
+    cout << endl;
+    return in;
+}
+ostream& operator<<(ostream& out, Homework& sum){
+    out << "Your object name is >> " << sum.name << endl;
+    out << "Your object time is >> " << sum.minutes << endl;
+    return out;
+}
+/*3. Complete the following tasks:
+b. Create a function template that adds two values and returns their sum.*/
+template <class T> T add_Two_objects(T one, T two){
+    T soma;
+    soma = one + two;//soma = one.operator+(two);
+    return soma;
+}
+/*c. Write a main()function that tests the function template with integer, double, and Homework
+objects. Save the file as AddTwoObjects.cpp.*/
+int main(){
+    Homework one("Caio", 22);
+    Homework two("Victor", 5);
+    Homework three;
+    int a = add_Two_objects(1,2);
+    cout << "add two integers >> " << a << endl;
+    double b = add_Two_objects(1.5,2.7);
+    cout << "add two doubles >> " << b << endl;
+    three = add_Two_objects(one,two);
+    cout << three << endl;
+    return 0;
+}
