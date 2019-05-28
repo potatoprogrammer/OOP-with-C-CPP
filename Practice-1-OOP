@@ -1,0 +1,83 @@
+//Name: Caio Vicitor Gonçalves - Object oriented practice code
+#include <iostream>
+#include <string>
+using namespace std;
+//class dog as aked
+class Dog{
+    private:
+        string name;
+        string breed;
+        int age;
+        const static double license_fee;
+    public:
+        void setData();
+        void displayData();
+        Dog();
+        double fee();
+};
+const double Dog::license_fee = 12.25;
+//constructor with the parameters asked
+Dog::Dog(){
+    this->name = "No Dog";
+    this->breed = "None";
+    this->age = 0;
+}
+//this function sets all the information for the dog
+void Dog::setData(){
+    string name{};
+    cout << "What is the name of your dog: ";
+    cin.sync(); //  flushing the buffer before calling getline
+    getline(cin,name); // takes the whole line, including the spaces
+    this->name = name;
+    cout << "What is the breed of your dog: ";
+    string breed{};
+    cin.sync(); //  flushing the buffer before calling getline
+    getline(cin,breed);
+    this->breed = breed;
+    cout << "What is the age of your dog: ";
+    int age{};
+    cin >> age;
+    this->age = age;
+}
+//this function displays the information entered in the previous function
+void Dog::displayData(){
+    cout << "Your dog's name is: " << this->name << endl;
+    cout << "it's breed is: " << this->breed << endl;
+    cout << "it's age is: " << this->age << endl;
+}
+//this function let me access the fees that is private in the class
+double Dog::fee(){
+    return license_fee;
+}
+int main(){
+    char user_answer{};
+    Dog adog;
+    int counter{};
+    //this will keep track of the price for the licenses 
+    double total_cost{};
+    //thiss will make me go out of the loop
+    bool saida{false};
+    //loop that keeps working until the user enters a n, not N or anything else.
+    do{
+        cout << "Would you like to license a dog? y or n only >> ";
+        cin >> user_answer;
+        if(user_answer == 'y'){
+            adog.setData();
+            adog.displayData();
+            total_cost += adog.fee();
+            saida = false;
+        }else if(user_answer == 'n'){
+            cout << "The last dog you have licensed was:" << endl;
+            adog.displayData();
+            cout << "You have licenced " << counter << " dogs." << endl;
+            cout << "The total fee is: $" << total_cost << endl;
+            saida = true;          
+        }else{
+            cout << "Wrong entry!";
+            saida = false;
+        }
+        //this will keep track of how many dogs were entered, and used to say how much is owe for the licensing
+        counter++;
+    }while (saida != true);
+    return 0;
+}
