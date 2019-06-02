@@ -1,0 +1,87 @@
+//Name: Caio Victor Gonçalves - 2019-05-30 - Project: Contability
+#include<iostream>
+#include<string>
+#include<vector>
+#include<iomanip>
+using namespace std;
+class Contability{
+    friend istream& operator>>(istream&, Contability&);
+    friend ostream& operator<<(ostream&, Contability&);
+    private:
+        string name;
+        double income{};
+        double remaining_salary{};
+        vector<string>expenses{};
+        vector<double>prices{};
+        double total_expenses{};
+    public:
+};
+istream& operator>>(istream& in, Contability& c){
+    cout << endl;
+    cout << "Enter the contability's name >> ";
+    in.sync();
+    getline(in,c.name);
+    // in >> c.name;
+    cout << "Enter the income for " << c.name << " >> $";
+    in >> c.income;
+    while(in.fail()){
+        in.clear(); // reset failbit
+        in.sync(); //skip bad input
+        cout << "Wrong entry. Please enter a numeric values." << endl;
+        cout << "Enter the income for " << c.name << " >> $";
+        in >> c.income;
+    }
+    int counter{};
+    string expenses{};
+    double prices{};
+    do
+    {
+        cout << "Enter an expense for " << c.name << ", or 'quit' to finish >> "; // expenses entry
+        in.sync();
+        getline(in,expenses);
+        // in >> expenses;
+        if(expenses == "quit"){
+            break;
+        }
+        c.expenses.push_back(expenses);
+        cout << "Enter the cost for " << c.expenses.at(counter) << " >> $";
+        in >> prices;
+        in.sync();
+        while(in.fail()){
+            in.clear(); // reset failbit
+            in.sync(); //skip bad input
+            cout << "Wrong entry. Please enter a numeric values." << endl;
+            cout << "Enter the cost for " << c.expenses.at(counter) << " >> $";
+            in >> prices;
+        }
+        c.prices.push_back(prices);
+        c.total_expenses = c.total_expenses + c.prices.at(counter);
+        counter++;
+    } while (expenses != "quit");
+    
+    return in;
+}
+ostream& operator<<(ostream& out, Contability& c){
+    out << endl;
+    out << setprecision(2) << fixed;
+    out << "Name >> " << c.name << endl;
+    out << "Income >> " << c.income << endl;
+    out << "Your expenses are: " << endl;
+    for(size_t i = 0; i < c.expenses.size(); i++){
+        out << c.expenses.at(i) << " >> $" << c.prices.at(i) << endl;
+    }
+    out << "Total expenses for " << c.name << " is >> $" << c.total_expenses << endl;
+    c.remaining_salary = c.income - c.total_expenses;
+    out << "The remaining income is >> $" << c.remaining_salary << endl;
+    return out;
+}
+int main(){
+    Contability casal[2];
+    cout << "*******************************Welcome to contability program*******************************" << endl;
+    cin >> casal[0];
+    cout << casal[0];
+    cout << endl;
+    cout << "********************************************************************************************" << endl;
+    cout << "This program was created by: Caio Victor Goncalves" << endl << endl;
+    return 0;
+} 
