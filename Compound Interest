@@ -1,0 +1,34 @@
+//Name: Caio Victor Gonçalves - Date: 2019-06-05 - Project: compound interest
+#include<iostream>
+#include<iomanip>
+using namespace std;
+class Interest{
+    friend istream& operator>>(istream&, Interest&);
+    private:
+        double rate{};
+        double number{};
+        double total{};
+        int time{};
+};
+istream& operator>>(istream& in, Interest& interest){
+    cout << setprecision(2) << fixed;
+    cout << endl;
+    cout << "Enter the rate in % >> ";
+    in >> interest.rate;
+    interest.rate = (interest.rate / 100) + 1;
+    cout << "Enter the value >> ";
+    in >> interest.number;
+    cout << "Enter the total of cycles >> ";
+    in >> interest.time;
+    interest.total = interest.number;
+    for(int i = 0; i < interest.time; i++){
+        interest.total = (interest.total * interest.rate);
+        cout << "cycle" << " " << i + 1 << " >> " << interest.total << endl;
+    }
+    return in;
+}
+int main(){
+    Interest one;
+    cin >> one;
+    return 0;
+}
